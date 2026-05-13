@@ -11,12 +11,8 @@ RUN pip install --no-cache-dir .
 
 COPY ynab_sync/ ynab_sync/
 
-RUN mkdir -p /data && \
-    groupadd -r appuser && \
-    useradd -r -g appuser -d /app -s /sbin/nologin appuser && \
-    chown -R appuser:appuser /app /data
+RUN mkdir -p /data
 
-USER appuser
 EXPOSE 8080
 
 CMD ["python3", "-m", "ynab_sync.main"]
