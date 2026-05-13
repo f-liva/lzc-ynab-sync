@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="30">
+    <title>YNAB Sync Log</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+               background: #0f172a; color: #e2e8f0; padding: 2rem; }
+        h1 { font-size: 1.5rem; margin-bottom: 1rem; color: #38bdf8; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+        th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid #1e293b; }
+        th { background: #1e293b; color: #94a3b8; font-weight: 600; }
+        tr:hover { background: #1e293b; }
+        .badge { display: inline-block; padding: 0.125rem 0.5rem; border-radius: 999px;
+                  font-size: 0.75rem; font-weight: 600; }
+        .success { background: #065f46; color: #6ee7b7; }
+        .error { background: #7f1d1d; color: #fca5a5; }
+        .running { background: #1e3a5f; color: #93c5fd; }
+        .count { font-variant-numeric: tabular-nums; }
+        details { margin-top: 0.25rem; }
+        details summary { cursor: pointer; color: #94a3b8; font-size: 0.75rem; }
+        details pre { background: #1e293b; padding: 0.5rem; border-radius: 4px;
+                       font-size: 0.75rem; margin-top: 0.25rem; overflow-x: auto; }
+        .empty { color: #64748b; text-align: center; padding: 3rem; }
+    </style>
+</head>
+<body>
+    <h1>YNAB Sync History</h1>
+    {% if logs %}
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Connector</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Cleared</th>
+                <th>Skipped</th>
+                <th>Errors</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.started_at[:19] }}</td>
+                <td>{{ log.connector }}</td>
+                <td><span class="badge {{ log.status }}">{{ log.status }}</span></td>
+                <td class="count">{{ log.created_count }}</td>
+                <td class="count">{{ log.cleared_count }}</td>
+                <td class="count">{{ log.skipped_count }}</td>
+                <td class="count">{{ log.error_count }}</td>
+                <td>
+                    {% if log.details %}
+                    <details>
+                        <summary>View ({{ log.details|length }})</summary>
+                        <pre>{{ log.details | tojson(indent=2) }}</pre>
+                    </details>
+                    {% endif %}
+                    {% if log.error_detail %}
+                    <details>
+                        <summary>Error</summary>
+                        <pre>{{ log.error_detail }}</pre>
+                    </details>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty">No syncs yet. Waiting for first run...</div>
+    {% endif %}
+</body>
+</html>
