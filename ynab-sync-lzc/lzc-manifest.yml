@@ -1,0 +1,18 @@
+application:
+  routes:
+    - /=http://ynab-sync.cloud.lazycat.app.ynab-sync.lzcapp:8080
+  subdomain: ynab-sync
+
+services:
+  ynab-sync:
+    image: docker.io/fliva/lzc-ynab-sync:1.0.0
+    binds:
+      - /lzcapp/var/data:/data
+    environment:
+      - YNAB_SYNC_API_KEY
+      - YNAB_SYNC_BUDGET_ID
+      - YNAB_SYNC_ACCOUNT_NAME=Gnosis
+      - YNAB_SYNC_GNOSIS_PK
+      - YNAB_SYNC_GNOSIS_ADDRESS
+      - YNAB_SYNC_INTERVAL=60
+      - YNAB_SYNC_PORT=8080

@@ -1,0 +1,19 @@
+package: cloud.lazycat.app.ynab-sync
+version: 1.0.0
+name: YNAB Sync
+description: Sync external payment transactions to YNAB
+author: Federico Liva
+license: MIT
+homepage: https://github.com/f-liva/lzc-ynab-sync
+
+locales:
+  en-US:
+    name: YNAB Sync
+    description: Periodically syncs transactions from payment sources (Gnosis Pay, etc.) to YNAB
+  it-IT:
+    name: YNAB Sync
+    description: Sincronizza periodicamente le transazioni da fonti di pagamento (Gnosis Pay, ecc.) su YNAB
+
+permissions:
+  required:
+    - net.internet

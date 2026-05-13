@@ -1,0 +1,16 @@
+services:
+  ynab-sync:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/data
+    environment:
+      - YNAB_SYNC_API_KEY=${YNAB_SYNC_API_KEY}
+      - YNAB_SYNC_BUDGET_ID=${YNAB_SYNC_BUDGET_ID}
+      - YNAB_SYNC_ACCOUNT_NAME=${YNAB_SYNC_ACCOUNT_NAME:-Gnosis}
+      - YNAB_SYNC_GNOSIS_PK=${YNAB_SYNC_GNOSIS_PK}
+      - YNAB_SYNC_GNOSIS_ADDRESS=${YNAB_SYNC_GNOSIS_ADDRESS}
+      - YNAB_SYNC_INTERVAL=${YNAB_SYNC_INTERVAL:-60}
+      - YNAB_SYNC_PORT=8080
+      - YNAB_SYNC_LOG_LEVEL=${YNAB_SYNC_LOG_LEVEL:-INFO}
