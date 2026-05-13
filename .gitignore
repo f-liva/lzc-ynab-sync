@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.env
+*.db
+jwt_cache.json
+*.egg-info/
+dist/
+build/
+.lpk
